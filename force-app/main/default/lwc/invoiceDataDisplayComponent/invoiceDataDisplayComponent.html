@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Create Invoice" icon-name="custom:custom15">
+        <div class="slds-m-around_medium">
+
+            <p><strong>Origin Record ID:</strong> {originRecordId}</p>
+            <p><strong>Account ID:</strong> {accountId}</p>
+            <p><strong>Invoice Date:</strong> {invoiceDate}</p>
+            <p><strong>Invoice Due Date:</strong> {invoiceDueDate}</p>
+            <p><strong>Child Relationship Name:</strong> {childRelationshipName}</p>
+
+            <template if:true={opportunityLineItems.length}>
+                <p><strong>Opportunity Line Items:</strong></p>
+                <template for:each={opportunityLineItems} for:item="lineItem">
+                    <div key={lineItem.Id} class="slds-m-top_medium">
+                        <p><strong>Description:</strong> {lineItem.Description}</p>
+                        <p><strong>Quantity:</strong> {lineItem.Quantity}</p>
+                        <p><strong>Unit Price:</strong> {lineItem.UnitPrice}</p>
+                    </div>
+                </template>
+            </template>
+
+            <template if:false={opportunityLineItems.length}>
+                <p>No Opportunity Line Items found.</p>
+            </template>
+            
+        </div>
+        <lightning-button label="Next" onclick={handleNext} class="slds-m-top_medium"></lightning-button>
+    </lightning-card>
+</template>

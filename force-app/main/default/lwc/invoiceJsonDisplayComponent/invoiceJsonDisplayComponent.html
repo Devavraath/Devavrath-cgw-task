@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Invoice Data" icon-name="custom:custom15">
+        <div class="slds-m-around_medium">
+            <template if:true={hasData}>
+                <p><strong>Invoice Data:</strong></p>
+                <pre>{invoiceDataString}</pre> <!-- Display JSON data as a formatted string -->
+                
+                <lightning-button label="Create Invoice" onclick={handleCreateInvoice} class="slds-m-top_medium"></lightning-button>
+            </template>
+                <template if:false={hasData}>
+                <p>No Invoice Data available.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>
