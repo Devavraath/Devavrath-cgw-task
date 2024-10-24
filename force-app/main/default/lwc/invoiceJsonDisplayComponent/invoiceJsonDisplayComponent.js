@@ -30,10 +30,15 @@ export default class InvoiceJsonDisplayComponent extends NavigationMixin(Lightni
     handleCreateInvoice() {
         console.log('Creating Invoice with Data:', this.invoiceData);
         if (this.invoiceData) {
-            // Fix the date format before sending to Apex
-            this.invoiceData.invoiceDate = this.formatDateToISO(this.invoiceData.invoiceDate);
-            this.invoiceData.invoiceDueDate = this.formatDateToISO(this.invoiceData.invoiceDueDate);
-    
+
+            this.invoiceData.invoiceDate = new Date().toISOString().substring(0, 10);
+
+            if (this.invoiceData.DueDate) {
+                this.invoiceData.invoiceDueDate = this.formatDateToISO(this.invoiceData.DueDate);
+            }
+
+            delete this.invoiceData.DueDate;
+
             const jsonData = JSON.stringify(this.invoiceData);
             createInvoice({ jsonData })
                 .then((result) => {
@@ -49,26 +54,22 @@ export default class InvoiceJsonDisplayComponent extends NavigationMixin(Lightni
             console.error('No invoice data available to create invoice.');
         }
     }
-    
-    // Helper method to format date from "DD/MM/YYYY" to "YYYY-MM-DD"
     formatDateToISO(dateString) {
         const [day, month, year] = dateString.split('/');
         return `${year}-${month}-${day}`;
     }
-    
-    
 
-navigateToRecord(recordId) {
-    console.log('Navigating to Record:', recordId); // Log the record ID
-    this[NavigationMixin.Navigate]({
-        type: 'standard__recordPage',
-        attributes: {
-            recordId: recordId,
-            objectApiName: 'Master_Invoice__c',
-            actionName: 'view'
-        }
-    });
-}
+    navigateToRecord(recordId) {
+        console.log('Navigating to Record:', recordId);
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recordId,
+                objectApiName: 'Master_Invoice__c',
+                actionName: 'view'
+            }
+        });
+    }
 
     showToast(title, message, variant) {
         const event = new ShowToastEvent({

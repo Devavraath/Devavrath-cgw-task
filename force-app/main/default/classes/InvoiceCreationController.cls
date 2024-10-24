@@ -1,23 +1,20 @@
 public with sharing class InvoiceCreationController {
     @AuraEnabled
     public static Master_Invoice__c createInvoice(String jsonData) {
-        // Step 1: Parse JSON data
+
         Map<String, Object> invoiceData = (Map<String, Object>) JSON.deserializeUntyped(jsonData);
 
-        // Step 2: Create the Master_Invoice__c record
         Master_Invoice__c newInvoice = new Master_Invoice__c(
-            Account__c = (Id) invoiceData.get('accountId'),
-            Opportunity__c = (Id) invoiceData.get('originRecordId'),
+            Account__c = (Id) invoiceData.get('Account'),
+            Opportunity__c = (Id) invoiceData.get('Opportunity'),
             Invoice_Date__c = Date.valueOf((String) invoiceData.get('invoiceDate')),
             Due_Date__c = Date.valueOf((String) invoiceData.get('invoiceDueDate'))
         );
 
-        // Insert the Master Invoice
         insert newInvoice;
 
-        // Step 3: Handle Opportunity Line Items
         List<Child_Invoice_Line__c> lineItems = new List<Child_Invoice_Line__c>();
-        Object oppLineItemsObj = invoiceData.get('opportunityLineItems');
+        Object oppLineItemsObj = invoiceData.get('LineItems');
 
         if (oppLineItemsObj instanceof List<Object>) {
             List<Object> oppLineItemsList = (List<Object>) oppLineItemsObj;
@@ -34,8 +31,6 @@ public with sharing class InvoiceCreationController {
                 lineItems.add(lineItem);
             }
         }
-
-        // Insert the line items
         if (!lineItems.isEmpty()) {
             insert lineItems;
         }

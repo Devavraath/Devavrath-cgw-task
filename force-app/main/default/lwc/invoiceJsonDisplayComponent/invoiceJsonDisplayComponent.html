@@ -3,9 +3,9 @@
         <div class="slds-m-around_medium">
             <template if:true={hasData}>
                 <p><strong>Invoice Data:</strong></p>
-                <pre>{invoiceDataString}</pre> <!-- Display JSON data as a formatted string -->
+                <pre>{invoiceDataString}</pre> 
                 
-                <lightning-button label="Create Invoice" onclick={handleCreateInvoice} class="slds-m-top_medium"></lightning-button>
+                <lightning-button label="Proceed to Create Invoice" onclick={handleCreateInvoice} class="slds-m-top_medium"></lightning-button>
             </template>
                 <template if:false={hasData}>
                 <p>No Invoice Data available.</p>

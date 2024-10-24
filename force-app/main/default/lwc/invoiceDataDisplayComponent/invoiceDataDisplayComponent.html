@@ -1,29 +1,44 @@
 <template>
     <lightning-card title="Create Invoice" icon-name="custom:custom15">
         <div class="slds-m-around_medium">
-
-            <p><strong>Origin Record ID:</strong> {originRecordId}</p>
-            <p><strong>Account ID:</strong> {accountId}</p>
-            <p><strong>Invoice Date:</strong> {invoiceDate}</p>
-            <p><strong>Invoice Due Date:</strong> {invoiceDueDate}</p>
-            <p><strong>Child Relationship Name:</strong> {childRelationshipName}</p>
-
-            <template if:true={opportunityLineItems.length}>
-                <p><strong>Opportunity Line Items:</strong></p>
-                <template for:each={opportunityLineItems} for:item="lineItem">
-                    <div key={lineItem.Id} class="slds-m-top_medium">
-                        <p><strong>Description:</strong> {lineItem.Description}</p>
-                        <p><strong>Quantity:</strong> {lineItem.Quantity}</p>
-                        <p><strong>Unit Price:</strong> {lineItem.UnitPrice}</p>
-                    </div>
-                </template>
-            </template>
-
-            <template if:false={opportunityLineItems.length}>
-                <p>No Opportunity Line Items found.</p>
-            </template>
-            
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <tbody>
+                    <tr>
+                        <td><strong>origin_record:</strong></td>
+                        <td>{originRecordId}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>account:</strong></td>
+                        <td>{accountId}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>invoice_date:</strong></td>
+                        <td>{invoiceDate}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>invoice_due_date:</strong></td>
+                        <td>{invoiceDueDate}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>child_relationship_name:</strong></td>
+                        <td>{childRelationshipName}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>line_item_description:</strong></td>
+                        <td>{lineItemDescriptionField}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>line_item_quantity:</strong></td>
+                        <td>{lineItemQuantityField}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>line_item_unit_price:</strong></td>
+                        <td>{lineItemUnitPriceField}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <lightning-button label="Next" onclick={handleNext} class="slds-m-top_medium"></lightning-button>
+        
+        <lightning-button label="Show JSON" onclick={handleNext} class="slds-m-top_medium" disabled={isLoading}></lightning-button>
     </lightning-card>
 </template>
